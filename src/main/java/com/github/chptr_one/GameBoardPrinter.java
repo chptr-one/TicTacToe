@@ -6,23 +6,9 @@ import java.util.stream.IntStream;
 
 public class GameBoardPrinter {
 
-    private final GameBoard gameBoard;
-    private final String columnNumbers;
+    private static String columnNumbers;
 
-    private GameBoardPrinter(GameBoard gameBoard) {
-        this.gameBoard = gameBoard;
-        columnNumbers = "  " + IntStream.range(1, gameBoard.getWidth() + 1)
-                .mapToObj(String::valueOf)
-                .collect(Collectors.joining(" "));
-    }
-
-    private static GameBoardPrinter instance;
-
-    public static GameBoardPrinter getInstance(GameBoard gameBoard) {
-        if (instance == null) {
-            instance = new GameBoardPrinter(gameBoard);
-        }
-        return instance;
+    private GameBoardPrinter() {
     }
 
     private static String markToString(Mark mark) {
@@ -30,7 +16,13 @@ public class GameBoardPrinter {
         return mark == Mark.X ? "x" : "o";
     }
 
-    public void print() {
+    public static void print(GameBoard gameBoard) {
+        if (columnNumbers == null) {
+            columnNumbers = "  " + IntStream.range(1, gameBoard.getWidth() + 1)
+                    .mapToObj(String::valueOf)
+                    .collect(Collectors.joining(" "));
+        }
+
         System.out.println(columnNumbers);
         int rowNumber = 1;
         for (var row : gameBoard.getBoard()) {
