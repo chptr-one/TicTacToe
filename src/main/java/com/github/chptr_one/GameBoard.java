@@ -17,11 +17,6 @@ public class GameBoard {
         this.board = new Mark[size][size];
     }
 
-    public boolean isValidCoordinates(Position pos) {
-        return pos.getRow() >= 0 && pos.getRow() < size
-                && pos.getCol() >= 0 && pos.getCol() < size;
-    }
-
     public boolean isEmptyCell(Position pos) {
         return board[pos.getRow()][pos.getCol()] == null;
     }
@@ -82,5 +77,9 @@ public class GameBoard {
 
     public Mark[][] getBoard() {
         return board;
+    }
+
+    public int getEmptyCells() {
+        return emptyCells;
     }
 }

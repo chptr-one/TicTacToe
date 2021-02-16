@@ -50,7 +50,6 @@ public class TicTacToeGame {
     }
 
     private boolean isValidMove(Position position) {
-        return gameBoard.isValidCoordinates(position)
-                && gameBoard.isEmptyCell(position);
+        return gameBoard.isEmptyCell(position);
     }
 }

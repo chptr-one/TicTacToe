@@ -1,5 +1,6 @@
 package com.github.chptr_one;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
@@ -29,6 +30,11 @@ public class GameBoardHasWinningLineTest {
             return "Seed is \n" + arrToString() + "Pos is" + pos;
         }
 
+    }
+
+    @BeforeAll
+    static void init() {
+        Position.initialize(3);
     }
 
     private static final TestCase[] xWins = {
