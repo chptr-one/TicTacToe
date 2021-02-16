@@ -17,15 +17,15 @@ public class Position {
         return col;
     }
 
-    private static int upperIndex;
+    private static int size;
     private static Position[] pool;
     private static boolean initialized = false;
 
-    public static void initialize(int excluding) {
-        upperIndex = excluding;
-        pool = new Position[upperIndex * upperIndex];
+    public static void initialize(int size) {
+        Position.size = size;
+        pool = new Position[Position.size * Position.size];
         for (int i = 0; i < pool.length; i++) {
-            pool[i] = new Position(i / upperIndex, i % upperIndex);
+            pool[i] = new Position(i / Position.size, i % Position.size);
         }
         initialized = true;
     }
@@ -35,7 +35,7 @@ public class Position {
         if (!initialized) {
             throw new IllegalStateException("You must initialize Position class before first usage.");
         }
-        return row >= 0 && row < upperIndex && col >= 0 && col < upperIndex;
+        return row >= 0 && row < size && col >= 0 && col < size;
     }
 
     public static Position of(int row, int col) {
@@ -43,14 +43,14 @@ public class Position {
             throw new IllegalStateException("You must initialize Position class before first usage.");
         }
         if (!isValid(row, col)) {
-            throw new IllegalArgumentException("Arguments must be in range [0.." + upperIndex + ").");
+            throw new IllegalArgumentException("Arguments must be in range [0.." + size + ").");
         }
 
-        return pool[row * upperIndex + col];
+        return pool[row * size + col];
     }
 
-    public static int getUpperIndex() {
-        return upperIndex;
+    public static int getSize() {
+        return size;
     }
 
     @Override

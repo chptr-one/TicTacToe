@@ -19,7 +19,7 @@ class PositionTest {
 
     @Test
     void positionInitializedCorrectly() {
-        assertEquals(SIZE, Position.getUpperIndex());
+        assertEquals(SIZE, Position.getSize());
     }
 
     @Test
