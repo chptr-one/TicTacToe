@@ -31,6 +31,9 @@ public class Position {
     }
 
     public static boolean isValid(int row, int col) {
+        if (!initialized) {
+            throw new IllegalStateException("You must initialize Position class before first usage.");
+        }
         return row >= 0 && row < upperIndex && col >= 0 && col < upperIndex;
     }
 

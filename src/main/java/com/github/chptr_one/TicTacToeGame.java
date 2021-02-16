@@ -15,6 +15,7 @@ public class TicTacToeGame {
     }
 
     public static void main(String[] args) {
+        Position.initialize(3);
         var game = new TicTacToeGame(
                 new GameBoard(3),
                 new HumanPlayer("X player", Mark.X),

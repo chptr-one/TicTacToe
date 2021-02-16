@@ -25,9 +25,13 @@ public class HumanPlayer implements Player {
 
     @Override
     public Position getMove(GameBoard gameBoard) {
-        System.out.print(name + ". Enter row and col: ");
-        int row = scanner.nextInt() - 1;
-        int col = scanner.nextInt() - 1;
+        int row;
+        int col;
+        do {
+            System.out.print(name + ". Enter row and col: ");
+            row = scanner.nextInt() - 1;
+            col = scanner.nextInt() - 1;
+        } while (!Position.isValid(row, col));
         return Position.of(row, col);
     }
 }
