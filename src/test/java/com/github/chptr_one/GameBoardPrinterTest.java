@@ -33,7 +33,7 @@ class GameBoardPrinterTest {
                 2 . . .
                 3 . . .
                 """;
-        var gameBoard = new GameBoard(3, 3);
+        var gameBoard = new GameBoard(3);
         GameBoardPrinter.print(gameBoard);
         Assertions.assertEquals(blankBoard3x3String, baos.toString());
     }

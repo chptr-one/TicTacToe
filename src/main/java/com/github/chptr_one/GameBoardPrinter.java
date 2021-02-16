@@ -18,7 +18,7 @@ public class GameBoardPrinter {
 
     public static void print(GameBoard gameBoard) {
         if (columnNumbers == null) {
-            columnNumbers = "  " + IntStream.range(1, gameBoard.getWidth() + 1)
+            columnNumbers = "  " + IntStream.range(1, gameBoard.getSize() + 1)
                     .mapToObj(String::valueOf)
                     .collect(Collectors.joining(" "));
         }
@@ -27,7 +27,6 @@ public class GameBoardPrinter {
         int rowNumber = 1;
         for (var row : gameBoard.getBoard()) {
             String result = rowNumber++ + " " + Arrays.stream(row)
-                    .map(Cell::getMark)
                     .map(GameBoardPrinter::markToString)
                     .collect(Collectors.joining(" "));
             System.out.println(result);

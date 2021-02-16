@@ -6,4 +6,6 @@ public interface Player {
 
     String getName();
 
+    Mark getMark();
+
 }
