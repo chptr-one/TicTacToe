@@ -1,6 +1,9 @@
 package com.github.chptr_one;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -10,11 +13,6 @@ class GameBoardPrinterTest {
     private final PrintStream originalOut = System.out;
     private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
     private final PrintStream redirectedOut = new PrintStream(baos);
-
-    @BeforeAll
-    static void init() {
-        Position.initialize(3);
-    }
 
     @BeforeEach
     public void setup() {

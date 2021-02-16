@@ -54,4 +54,19 @@ class PositionTest {
         assertThrows(IllegalArgumentException.class, () -> Position.of(3, 0));
         assertThrows(IllegalArgumentException.class, () -> Position.of(0, 3));
     }
+
+    @Test
+    void isValidThrowsExceptionIfNotInitialized() {
+        try {
+            Field initialized = Position.class.getDeclaredField("initialized");
+            initialized.setAccessible(true);
+            initialized.set(Position.class, false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        //noinspection ResultOfMethodCallIgnored
+        assertThrows(IllegalStateException.class,
+                () -> Position.isValid(-1, 0));
+    }
 }

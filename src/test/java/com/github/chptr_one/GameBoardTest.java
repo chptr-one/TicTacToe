@@ -3,8 +3,7 @@ package com.github.chptr_one;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {
 
@@ -18,6 +17,11 @@ class GameBoardTest {
     @Test
     void getEmptyCellsReturnsRightNumberForEmptyBoard() {
         assertEquals(3 * 3, gameBoard3x3.getEmptyCells());
+    }
+
+    @Test
+    void hasEmptyCellReturnsTrue() {
+        assertTrue(gameBoard3x3.hasEmptyCells());
     }
 
     @Test
