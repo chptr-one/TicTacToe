@@ -36,7 +36,7 @@ public class TicTacToeGame {
 
             gameBoard.setMark(position, currentPlayer.getMark());
 
-            if (gameBoard.getEmptyCells() == 0) {
+            if (!gameBoard.hasEmptyCells()) {
                 gameState = GameState.DRAW;
             } else if (gameBoard.hasWinningLine(position)) {
                 gameState = currentPlayer == firstPlayer ? GameState.X_WINS : GameState.O_WINS;

@@ -72,8 +72,8 @@ public class GameBoard {
                 .orElse(false);
     }
 
-    public int getEmptyCells() {
-        return emptyCells;
+    public boolean hasEmptyCells() {
+        return emptyCells > 0;
     }
 
     public int getSize() {
