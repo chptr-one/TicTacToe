@@ -25,7 +25,6 @@ public class HumanPlayer implements Player {
 
     @Override
     public Position getMove(GameBoard gameBoard) {
-        GameBoardPrinter.print(gameBoard);
         System.out.print(name + ". Enter row and col: ");
         int row = scanner.nextInt() - 1;
         int col = scanner.nextInt() - 1;

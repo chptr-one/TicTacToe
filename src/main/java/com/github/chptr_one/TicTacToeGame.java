@@ -25,6 +25,8 @@ public class TicTacToeGame {
     }
 
     public void run() {
+        GameBoardPrinter.print(gameBoard);
+
         Player currentPlayer = firstPlayer;
         do {
             Position position;
@@ -40,8 +42,8 @@ public class TicTacToeGame {
                 gameState = currentPlayer == firstPlayer ? GameState.X_WINS : GameState.O_WINS;
             }
 
+            GameBoardPrinter.print(gameBoard);
             currentPlayer = currentPlayer == firstPlayer ? secondPlayer : firstPlayer;
-
         } while (gameState == GameState.RUNNING);
 
         System.out.println(gameState);
