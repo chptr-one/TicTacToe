@@ -65,14 +65,11 @@ public class GameBoard {
                 i -> board[size - i - 1][i] == origin
         );
 
-        boolean result = false;
-        for (var predicate : predicates) {
-            result = isLineCompleted(predicate);
-            if (result) {
-                break;
-            }
-        }
-        return result;
+        return predicates.stream()
+                .map(this::isLineCompleted)
+                .filter(b -> b)
+                .findFirst()
+                .orElse(false);
     }
 
     public int getEmptyCells() {
