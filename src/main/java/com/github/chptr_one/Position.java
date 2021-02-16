@@ -30,7 +30,6 @@ public class Position {
         initialized = true;
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isValid(int row, int col) {
         if (!initialized) {
             throw new IllegalStateException("You must initialize Position class before first usage.");
