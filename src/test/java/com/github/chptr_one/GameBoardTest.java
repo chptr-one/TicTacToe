@@ -15,8 +15,8 @@ class GameBoardTest {
     }
 
     @Test
-    void getEmptyCellsReturnsRightNumberForEmptyBoard() {
-        assertEquals(3 * 3, gameBoard3x3.getEmptyCells());
+    void boardHasRightNumberOfEmptyCells() {
+        assertEquals(3 * 3, gameBoard3x3.getNumberOfEmptyCells());
     }
 
     @Test
@@ -25,10 +25,9 @@ class GameBoardTest {
     }
 
     @Test
-    void setMarkInEmptyCell() {
+    void setMarkInEmptyCellChangesBoard() {
         gameBoard3x3.setMark(Position.of(0, 0), Mark.X);
         assertEquals(Mark.X, gameBoard3x3.getBoard()[0][0]);
-        assertEquals(3 * 3 - 1, gameBoard3x3.getEmptyCells());
     }
 
     @Test
@@ -36,7 +35,13 @@ class GameBoardTest {
         gameBoard3x3.setMark(Position.of(1, 1), Mark.O);
         gameBoard3x3.setMark(Position.of(1, 1), Mark.X);
         assertEquals(Mark.O, gameBoard3x3.getBoard()[1][1]);
-        assertEquals(3 * 3 - 1, gameBoard3x3.getEmptyCells());
+    }
+
+    @Test
+    void setMarkReducesNumberOfEmptyCells() {
+        int numberOfEmptyCells = gameBoard3x3.getNumberOfEmptyCells();
+        gameBoard3x3.setMark(Position.of(1, 1), Mark.X);
+        assertEquals(numberOfEmptyCells - 1, gameBoard3x3.getNumberOfEmptyCells());
     }
 
     @Test
@@ -44,12 +49,19 @@ class GameBoardTest {
         gameBoard3x3.setMark(Position.of(2, 2), Mark.X);
         gameBoard3x3.unsetMark(Position.of(2, 2));
         assertNull(gameBoard3x3.getBoard()[2][2]);
-        assertEquals(3 * 3, gameBoard3x3.getEmptyCells());
     }
 
     @Test
     void unsetMarkDoNothingOnEmptyCell() {
         gameBoard3x3.unsetMark(Position.of(0, 0));
-        assertEquals(3 * 3, gameBoard3x3.getEmptyCells());
+        assertEquals(3 * 3, gameBoard3x3.getNumberOfEmptyCells());
+    }
+
+    @Test
+    void unsetMarkIncreasesNumberOfEmptyCells() {
+        gameBoard3x3.setMark(Position.of(2, 2), Mark.X);
+        int numberOfEmptyCells = gameBoard3x3.getNumberOfEmptyCells();
+        gameBoard3x3.unsetMark(Position.of(2, 2));
+        assertEquals(numberOfEmptyCells + 1, gameBoard3x3.getNumberOfEmptyCells());
     }
 }

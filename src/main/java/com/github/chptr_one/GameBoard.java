@@ -13,7 +13,6 @@ public class GameBoard {
     public GameBoard(int size) {
         this.size = size;
         this.emptyCells = size * size;
-
         this.board = new Mark[size][size];
     }
 
@@ -71,15 +70,15 @@ public class GameBoard {
         return emptyCells > 0;
     }
 
+    public int getNumberOfEmptyCells() {
+        return emptyCells;
+    }
+
     public int getSize() {
         return size;
     }
 
     public Mark[][] getBoard() {
         return board;
-    }
-
-    public int getEmptyCells() {
-        return emptyCells;
     }
 }
