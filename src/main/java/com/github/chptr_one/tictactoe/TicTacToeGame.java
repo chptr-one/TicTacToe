@@ -1,4 +1,12 @@
-package com.github.chptr_one;
+package com.github.chptr_one.tictactoe;
+
+import com.github.chptr_one.tictactoe.common.GameBoard;
+import com.github.chptr_one.tictactoe.common.GameState;
+import com.github.chptr_one.tictactoe.common.Mark;
+import com.github.chptr_one.tictactoe.common.Position;
+import com.github.chptr_one.tictactoe.player.HumanPlayer;
+import com.github.chptr_one.tictactoe.player.Player;
+import com.github.chptr_one.tictactoe.ui.GameBoardPrinter;
 
 public class TicTacToeGame {
 

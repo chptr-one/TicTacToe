@@ -1,5 +1,8 @@
-package com.github.chptr_one;
+package com.github.chptr_one.tictactoe;
 
+import com.github.chptr_one.tictactoe.common.GameBoard;
+import com.github.chptr_one.tictactoe.common.Mark;
+import com.github.chptr_one.tictactoe.common.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

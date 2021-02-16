@@ -1,5 +1,7 @@
-package com.github.chptr_one;
+package com.github.chptr_one.tictactoe;
 
+import com.github.chptr_one.tictactoe.common.GameBoard;
+import com.github.chptr_one.tictactoe.ui.GameBoardPrinter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,5 +1,6 @@
-package com.github.chptr_one;
+package com.github.chptr_one.tictactoe;
 
+import com.github.chptr_one.tictactoe.common.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

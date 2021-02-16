@@ -1,4 +1,4 @@
-package com.github.chptr_one;
+package com.github.chptr_one.tictactoe.common;
 
 import java.util.List;
 import java.util.function.Predicate;

@@ -1,4 +1,4 @@
-package com.github.chptr_one;
+package com.github.chptr_one.tictactoe.common;
 
 public class Position {
     private final int row;

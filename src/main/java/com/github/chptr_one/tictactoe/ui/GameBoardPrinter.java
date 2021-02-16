@@ -1,4 +1,7 @@
-package com.github.chptr_one;
+package com.github.chptr_one.tictactoe.ui;
+
+import com.github.chptr_one.tictactoe.common.GameBoard;
+import com.github.chptr_one.tictactoe.common.Mark;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
