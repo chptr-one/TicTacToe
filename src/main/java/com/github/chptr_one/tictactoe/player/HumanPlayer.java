@@ -6,25 +6,12 @@ import com.github.chptr_one.tictactoe.common.Position;
 
 import java.util.Scanner;
 
-public class HumanPlayer implements Player {
+public class HumanPlayer extends AbstractPlayer {
 
-    private final String name;
-    private final Mark mark;
     private final Scanner scanner = new Scanner(System.in);
 
     public HumanPlayer(String name, Mark mark) {
-        this.name = name;
-        this.mark = mark;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public Mark getMark() {
-        return mark;
+        super(name, mark);
     }
 
     @Override
