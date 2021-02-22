@@ -1,7 +1,8 @@
 package com.github.chptr_one.tictactoe.common;
 
-import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class GameBoard {
 
@@ -36,13 +37,7 @@ public class GameBoard {
     }
 
     private boolean isLineCompleted(Predicate<Integer> predicate) {
-        boolean result = true;
-        int i = 0;
-        while (result && i < size) {
-            result = predicate.test(i);
-            i++;
-        }
-        return result;
+        return IntStream.range(0, size).allMatch(predicate::test);
     }
 
     public boolean hasWinningLine(Position pos) {
@@ -52,18 +47,18 @@ public class GameBoard {
         if (emptyCells > size * size - (size * 2 - 1)) return false;
 
         var origin = board[pos.getRow()][pos.getCol()];
-        List<Predicate<Integer>> predicates = List.of(
-                i -> board[pos.getRow()][i] == origin,
-                i -> board[i][pos.getCol()] == origin,
-                i -> board[i][i] == origin,
-                i -> board[size - i - 1][i] == origin
-        );
 
-        return predicates.stream()
-                .map(this::isLineCompleted)
-                .filter(b -> b)
-                .findFirst()
-                .orElse(false);
+        Stream.Builder<Predicate<Integer>> builder = Stream.builder();
+        builder.add(i -> board[pos.getRow()][i] == origin);
+        builder.add(i -> board[i][pos.getCol()] == origin);
+        if (pos.getRow() == pos.getCol()) {
+            builder.add(i -> board[i][i] == origin);
+        }
+        if (size - pos.getRow() - 1 == pos.getCol()) {
+            builder.add(i -> board[size - i - 1][i] == origin);
+        }
+
+        return builder.build().anyMatch(this::isLineCompleted);
     }
 
     public boolean hasEmptyCells() {
