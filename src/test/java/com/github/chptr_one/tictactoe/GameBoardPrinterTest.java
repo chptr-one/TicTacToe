@@ -29,12 +29,8 @@ class GameBoardPrinterTest {
 
     @Test
     public void blankGameBoardPrints() {
-        String blankBoard3x3String = """
-                  1 2 3
-                1 . . .
-                2 . . .
-                3 . . .
-                """;
+        String ls = System.getProperty("line.separator");
+        String blankBoard3x3String = "  1 2 3" + ls + "1 . . ." + ls + "2 . . ." + ls + "3 . . ." + ls;
         var gameBoard = new GameBoard(3);
         GameBoardPrinter.print(gameBoard);
         Assertions.assertEquals(blankBoard3x3String, baos.toString());
