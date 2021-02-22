@@ -4,6 +4,7 @@ import com.github.chptr_one.tictactoe.common.GameBoard;
 import com.github.chptr_one.tictactoe.common.GameState;
 import com.github.chptr_one.tictactoe.common.Mark;
 import com.github.chptr_one.tictactoe.common.Position;
+import com.github.chptr_one.tictactoe.player.AiPlayer;
 import com.github.chptr_one.tictactoe.player.HumanPlayer;
 import com.github.chptr_one.tictactoe.player.Player;
 import com.github.chptr_one.tictactoe.ui.GameBoardPrinter;
@@ -27,7 +28,7 @@ public class TicTacToeGame {
         var game = new TicTacToeGame(
                 new GameBoard(3),
                 new HumanPlayer("X player", Mark.X),
-                new HumanPlayer("O player", Mark.O)
+                new AiPlayer("O player", Mark.O)
         );
 
         game.run();
@@ -45,6 +46,7 @@ public class TicTacToeGame {
 
             gameBoard.setMark(position, currentPlayer.getMark());
 
+            // TODO игра неверно определяет ничью если игрок выигрывает ходом в последнюю свободную клетку
             if (!gameBoard.hasEmptyCells()) {
                 gameState = GameState.DRAW;
             } else if (gameBoard.hasWinningLine(position)) {
