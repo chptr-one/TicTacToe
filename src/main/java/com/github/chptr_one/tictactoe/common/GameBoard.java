@@ -19,7 +19,7 @@ public class GameBoard {
         this.board = new Mark[size][size];
     }
 
-    public Set<Position> getPossibleMoves() {
+    public Set<Position> getEmptyCells() {
         Set<Position> moves = new HashSet<>();
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {

@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static com.github.chptr_one.tictactoe.common.Mark.X;
 import static org.junit.jupiter.api.Assertions.*;
@@ -91,7 +88,7 @@ class GameBoardTest {
             var move = iterator.next();
             gameBoard.setMark(move, X);
             iterator.remove();
-            Set<Position> actualMoves = gameBoard.getPossibleMoves();
+            Set<Position> actualMoves = gameBoard.getEmptyCells();
             assertEquals(expectedMoves, actualMoves);
         }
     }
