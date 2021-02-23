@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import static com.github.chptr_one.tictactoe.common.Mark.X;
@@ -14,24 +15,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AiPlayerTest {
 
+    private final List<TestCase> oneMoveToWin = List.of(
+            new TestCase("xx." + ".o." + "o..", Position.of(0, 2), 5)
+    );
 
     @Test
-    void getPossibleMoves() {
-        Set<Position> expectedMoves = new HashSet<>(9);
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                expectedMoves.add(Position.of(row, col));
-            }
-        }
-
-        GameBoard gameBoard = new GameBoard(3);
-        Iterator<Position> iterator = expectedMoves.iterator();
-        while (iterator.hasNext()) {
-            var move = iterator.next();
-            gameBoard.setMark(move, X);
-            iterator.remove();
-            Set<Position> actualMoves = AiPlayer.getPossibleMoves(gameBoard);
-            assertEquals(expectedMoves, actualMoves);
+    void aiPlayerWinsIfCanFillTheLine() {
+        var aiPlayer = new AiPlayer("Test AI", X);
+        for (var testCase : oneMoveToWin) {
+            var gameBoard = testCase.getGameBoard();
+            var move = aiPlayer.getMove(gameBoard);
+            assertEquals(testCase.getPos(), move);
         }
     }
+
+
 }

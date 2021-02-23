@@ -6,6 +6,11 @@ import com.github.chptr_one.tictactoe.common.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import static com.github.chptr_one.tictactoe.common.Mark.X;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameBoardTest {
@@ -66,5 +71,25 @@ class GameBoardTest {
         int numberOfEmptyCells = gameBoard3x3.getNumberOfEmptyCells();
         gameBoard3x3.unsetMark(Position.of(2, 2));
         assertEquals(numberOfEmptyCells + 1, gameBoard3x3.getNumberOfEmptyCells());
+    }
+
+    @Test
+    void getPossibleMoves() {
+        Set<Position> expectedMoves = new HashSet<>(9);
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                expectedMoves.add(Position.of(row, col));
+            }
+        }
+
+        GameBoard gameBoard = new GameBoard(3);
+        Iterator<Position> iterator = expectedMoves.iterator();
+        while (iterator.hasNext()) {
+            var move = iterator.next();
+            gameBoard.setMark(move, X);
+            iterator.remove();
+            Set<Position> actualMoves = gameBoard.getPossibleMoves();
+            assertEquals(expectedMoves, actualMoves);
+        }
     }
 }

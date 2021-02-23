@@ -4,9 +4,6 @@ import com.github.chptr_one.tictactoe.common.GameBoard;
 import com.github.chptr_one.tictactoe.common.Mark;
 import com.github.chptr_one.tictactoe.common.Position;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import static com.github.chptr_one.tictactoe.common.Mark.O;
 import static com.github.chptr_one.tictactoe.common.Mark.X;
 
@@ -23,7 +20,7 @@ public class AiPlayer extends AbstractPlayer {
     public Position getMove(GameBoard gameBoard) {
         Position bestMove = null;
         int bestWeight = Integer.MIN_VALUE;
-        for (var move : getPossibleMoves(gameBoard)) {
+        for (var move : gameBoard.getPossibleMoves()) {
             gameBoard.setMark(move, mark);
             int weight = minimax(gameBoard, move, false);
             gameBoard.unsetMark(move);
@@ -32,7 +29,6 @@ public class AiPlayer extends AbstractPlayer {
                 bestMove = move;
             }
         }
-        System.out.println(bestWeight + " " + bestMove);
         return bestMove;
     }
 
@@ -53,7 +49,7 @@ public class AiPlayer extends AbstractPlayer {
 
         if (isMax) {
             int maxWeight = Integer.MIN_VALUE;
-            for (var pos : getPossibleMoves(gameBoard)) {
+            for (var pos : gameBoard.getPossibleMoves()) {
                 gameBoard.setMark(pos, mark);
                 int weight = minimax(gameBoard, pos, !isMax);
                 gameBoard.unsetMark(pos);
@@ -62,7 +58,7 @@ public class AiPlayer extends AbstractPlayer {
             return maxWeight;
         } else {
             int minWeight = Integer.MAX_VALUE;
-            for (var pos : getPossibleMoves(gameBoard)) {
+            for (var pos : gameBoard.getPossibleMoves()) {
                 gameBoard.setMark(pos, opponentMark);
                 int weight = minimax(gameBoard, pos, !isMax);
                 gameBoard.unsetMark(pos);
@@ -72,16 +68,4 @@ public class AiPlayer extends AbstractPlayer {
         }
     }
 
-    static public Set<Position> getPossibleMoves(GameBoard gameBoard) {
-        Set<Position> moves = new HashSet<>();
-        for (int row = 0; row < gameBoard.getSize(); row++) {
-            for (int col = 0; col < gameBoard.getSize(); col++) {
-                Position move = Position.of(row, col);
-                if (gameBoard.isEmptyCell(move)) {
-                    moves.add(move);
-                }
-            }
-        }
-        return moves;
-    }
 }

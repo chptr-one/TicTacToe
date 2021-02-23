@@ -1,5 +1,7 @@
 package com.github.chptr_one.tictactoe.common;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -15,6 +17,19 @@ public class GameBoard {
         this.size = size;
         this.emptyCells = size * size;
         this.board = new Mark[size][size];
+    }
+
+    public Set<Position> getPossibleMoves() {
+        Set<Position> moves = new HashSet<>();
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                Position move = Position.of(row, col);
+                if (isEmptyCell(move)) {
+                    moves.add(move);
+                }
+            }
+        }
+        return moves;
     }
 
     public boolean isEmptyCell(Position pos) {
