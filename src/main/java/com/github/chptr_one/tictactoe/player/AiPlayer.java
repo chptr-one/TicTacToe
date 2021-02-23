@@ -6,7 +6,6 @@ import com.github.chptr_one.tictactoe.common.Position;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static com.github.chptr_one.tictactoe.common.Mark.O;
 import static com.github.chptr_one.tictactoe.common.Mark.X;
@@ -22,7 +21,55 @@ public class AiPlayer extends AbstractPlayer {
 
     @Override
     public Position getMove(GameBoard gameBoard) {
-        return getPossibleMoves(gameBoard).stream().findAny().get();
+        Position bestMove = null;
+        int bestWeight = Integer.MIN_VALUE;
+        for (var move : getPossibleMoves(gameBoard)) {
+            gameBoard.setMark(move, mark);
+            int weight = minimax(gameBoard, move, false);
+            gameBoard.unsetMark(move);
+            if (weight > bestWeight) {
+                bestWeight = weight;
+                bestMove = move;
+            }
+        }
+        System.out.println(bestWeight + " " + bestMove);
+        return bestMove;
+    }
+
+    private int calculateWeight(GameBoard gameBoard, Position move) {
+        if (gameBoard.hasWinningLine(move)) {
+            return 100;
+        } else {
+            return 0;
+        }
+    }
+
+    private int minimax(GameBoard gameBoard, Position move, boolean isMax) {
+        if (isGameOver(gameBoard, move)) {
+            int weight = calculateWeight(gameBoard, move);
+            weight = isMax ? -weight : weight;
+            return weight;
+        }
+
+        if (isMax) {
+            int maxWeight = Integer.MIN_VALUE;
+            for (var pos : getPossibleMoves(gameBoard)) {
+                gameBoard.setMark(pos, mark);
+                int weight = minimax(gameBoard, pos, !isMax);
+                gameBoard.unsetMark(pos);
+                maxWeight = Math.max(weight, maxWeight);
+            }
+            return maxWeight;
+        } else {
+            int minWeight = Integer.MAX_VALUE;
+            for (var pos : getPossibleMoves(gameBoard)) {
+                gameBoard.setMark(pos, opponentMark);
+                int weight = minimax(gameBoard, pos, !isMax);
+                gameBoard.unsetMark(pos);
+                minWeight = Math.min(weight, minWeight);
+            }
+            return minWeight;
+        }
     }
 
     static public Set<Position> getPossibleMoves(GameBoard gameBoard) {
@@ -36,5 +83,9 @@ public class AiPlayer extends AbstractPlayer {
             }
         }
         return moves;
+    }
+
+    static public boolean isGameOver(GameBoard gameBoard, Position move) {
+        return !gameBoard.hasEmptyCells() || gameBoard.hasWinningLine(move);
     }
 }
