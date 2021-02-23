@@ -65,6 +65,10 @@ public class GameBoard {
         return emptyCells > 0;
     }
 
+    public boolean isGameOver(Position move) {
+        return !hasEmptyCells() || hasWinningLine(move);
+    }
+
     public int getNumberOfEmptyCells() {
         return emptyCells;
     }

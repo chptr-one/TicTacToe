@@ -46,11 +46,12 @@ public class TicTacToeGame {
 
             gameBoard.setMark(position, currentPlayer.getMark());
 
-            // TODO игра неверно определяет ничью если игрок выигрывает ходом в последнюю свободную клетку
-            if (!gameBoard.hasEmptyCells()) {
-                gameState = GameState.DRAW;
-            } else if (gameBoard.hasWinningLine(position)) {
-                gameState = currentPlayer == firstPlayer ? GameState.X_WINS : GameState.O_WINS;
+            if (gameBoard.isGameOver(position)) {
+                if (!gameBoard.hasEmptyCells()) {
+                    gameState = GameState.DRAW;
+                } else {
+                    gameState = currentPlayer == firstPlayer ? GameState.X_WINS : GameState.O_WINS;
+                }
             }
 
             GameBoardPrinter.print(gameBoard);
