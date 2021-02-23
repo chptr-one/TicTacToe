@@ -2,6 +2,7 @@ package com.github.chptr_one.tictactoe;
 
 import com.github.chptr_one.tictactoe.common.Position;
 import com.github.chptr_one.tictactoe.player.AiPlayer;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -17,6 +18,11 @@ class AiPlayerTest {
             new TestCase("x.o" + ".x." + "o..", Position.of(2, 2), 5),
             new TestCase(".xo" + "o.." + ".x.", Position.of(1, 1), 5)
     );
+
+    @BeforeAll
+    static void init() {
+        Position.initialize(3);
+    }
 
     @Test
     void aiPlayerWinsByCompletedAlmostWinningLine() {

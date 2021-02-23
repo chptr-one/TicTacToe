@@ -45,6 +45,7 @@ public class TicTacToeGame {
             } while (!isValidMove(position));
 
             gameBoard.setMark(position, currentPlayer.getMark());
+            GameBoardPrinter.print(gameBoard);
 
             if (gameBoard.isGameOver(position)) {
                 if (!gameBoard.hasEmptyCells()) {
@@ -52,13 +53,12 @@ public class TicTacToeGame {
                 } else {
                     gameState = currentPlayer == firstPlayer ? GameState.X_WINS : GameState.O_WINS;
                 }
+            } else {
+                currentPlayer = currentPlayer == firstPlayer ? secondPlayer : firstPlayer;
             }
-
-            GameBoardPrinter.print(gameBoard);
-            currentPlayer = currentPlayer == firstPlayer ? secondPlayer : firstPlayer;
         } while (gameState == GameState.RUNNING);
 
-        System.out.println(gameState);
+        System.out.println(gameState + " current player: " + currentPlayer.getName());
     }
 
     private boolean isValidMove(Position position) {
