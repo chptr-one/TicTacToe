@@ -14,13 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AiPlayerTest {
 
-    @Test
-    void getMove() {
-    }
-
-    @Test
-    void minimax() {
-    }
 
     @Test
     void getPossibleMoves() {

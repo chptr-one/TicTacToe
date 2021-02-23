@@ -45,7 +45,7 @@ public class AiPlayer extends AbstractPlayer {
     }
 
     private int minimax(GameBoard gameBoard, Position move, boolean isMax) {
-        if (isGameOver(gameBoard, move)) {
+        if (gameBoard.isGameOver(move)) {
             int weight = calculateWeight(gameBoard, move);
             weight = isMax ? -weight : weight;
             return weight;
@@ -83,9 +83,5 @@ public class AiPlayer extends AbstractPlayer {
             }
         }
         return moves;
-    }
-
-    static public boolean isGameOver(GameBoard gameBoard, Position move) {
-        return !gameBoard.hasEmptyCells() || gameBoard.hasWinningLine(move);
     }
 }

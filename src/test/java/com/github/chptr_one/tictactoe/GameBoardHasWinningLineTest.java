@@ -1,39 +1,14 @@
 package com.github.chptr_one.tictactoe;
 
 import com.github.chptr_one.tictactoe.common.GameBoard;
-import com.github.chptr_one.tictactoe.common.Mark;
 import com.github.chptr_one.tictactoe.common.Position;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameBoardHasWinningLineTest {
-
-    static class TestCase {
-        String seed;
-        Position pos;
-        int emptyCells;
-
-        public TestCase(String seed, Position pos, int emptyCells) {
-            this.seed = seed;
-            this.pos = pos;
-            this.emptyCells = emptyCells;
-        }
-
-        private String arrToString() {
-            return seed.substring(0, 3) + '\n' + seed.substring(3, 6) + '\n' + seed.substring(6, 9) + '\n';
-        }
-
-        @Override
-        public String toString() {
-            return "Seed is \n" + arrToString() + "Pos is" + pos;
-        }
-
-    }
 
     @BeforeAll
     static void init() {
@@ -68,46 +43,28 @@ public class GameBoardHasWinningLineTest {
             new TestCase("xxo" + "oox" + "xox", Position.of(1, 2), 0)
     };
 
-    private final GameBoard gameBoard = new GameBoard(3);
-
-    private static void initializeBoard(GameBoard gameBoard, TestCase testCase) {
-        Mark[][] board = gameBoard.getBoard();
-
-        for (int i = 0; i < board.length * board.length; i++) {
-            char ch = testCase.seed.charAt(i);
-            board[i / board.length][i % board.length] = ch == 'x' ? Mark.X : ch == 'o' ? Mark.O : null;
-        }
-
-        try {
-            Field emptyCells = gameBoard.getClass().getDeclaredField("emptyCells");
-            emptyCells.setAccessible(true);
-            emptyCells.set(gameBoard, testCase.emptyCells);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Test
     void hasWinningLineReturnsTrueOnWinningLines() {
         for (var testCase : xWins) {
-            initializeBoard(gameBoard, testCase);
-            assertTrue(gameBoard.hasWinningLine(testCase.pos), "Failed testCase:\n" + testCase);
+            GameBoard gameBoard = testCase.getGameBoard();
+            assertTrue(gameBoard.hasWinningLine(testCase.getPos()), "Failed testCase:\n" + testCase);
         }
     }
 
     @Test
     void hasWinningLineReturnsFalseIfGameNotOver() {
         for (var testCase : gameIsNotOverYet) {
-            initializeBoard(gameBoard, testCase);
-            assertFalse(gameBoard.hasWinningLine(testCase.pos), "Failed testCase:\n" + testCase);
+            GameBoard gameBoard = testCase.getGameBoard();
+            assertFalse(gameBoard.hasWinningLine(testCase.getPos()), "Failed testCase:\n" + testCase);
         }
     }
 
     @Test
     void HasWinningLineReturnsFalseIfDraw() {
         for (var testCase : draw) {
-            initializeBoard(gameBoard, testCase);
-            assertFalse(gameBoard.hasWinningLine(testCase.pos), "Failed testCase:\n" + testCase);
+            GameBoard gameBoard = testCase.getGameBoard();
+            assertFalse(gameBoard.hasWinningLine(testCase.getPos()), "Failed testCase:\n" + testCase);
         }
     }
 }
