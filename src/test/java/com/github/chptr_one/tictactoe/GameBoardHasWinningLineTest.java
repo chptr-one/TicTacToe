@@ -2,16 +2,16 @@ package com.github.chptr_one.tictactoe;
 
 import com.github.chptr_one.tictactoe.common.GameBoard;
 import com.github.chptr_one.tictactoe.common.Position;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class GameBoardHasWinningLineTest {
 
-    @BeforeAll
-    static void init() {
+    @BeforeClass
+    public static void init() {
         Position.initialize(3);
     }
 
@@ -45,26 +45,26 @@ public class GameBoardHasWinningLineTest {
 
 
     @Test
-    void hasWinningLineReturnsTrueOnWinningLines() {
+    public void hasWinningLineReturnsTrueOnWinningLines() {
         for (var testCase : xWins) {
             GameBoard gameBoard = testCase.getGameBoard();
-            assertTrue(gameBoard.hasWinningLine(testCase.getPos()), "Failed testCase:\n" + testCase);
+            assertTrue("Failed testCase:\n" + testCase, gameBoard.hasWinningLine(testCase.getPos()));
         }
     }
 
     @Test
-    void hasWinningLineReturnsFalseIfGameNotOver() {
+    public void hasWinningLineReturnsFalseIfGameNotOver() {
         for (var testCase : gameIsNotOverYet) {
             GameBoard gameBoard = testCase.getGameBoard();
-            assertFalse(gameBoard.hasWinningLine(testCase.getPos()), "Failed testCase:\n" + testCase);
+            assertFalse("Failed testCase:\n" + testCase, gameBoard.hasWinningLine(testCase.getPos()));
         }
     }
 
     @Test
-    void HasWinningLineReturnsFalseIfDraw() {
+    public void HasWinningLineReturnsFalseIfDraw() {
         for (var testCase : draw) {
             GameBoard gameBoard = testCase.getGameBoard();
-            assertFalse(gameBoard.hasWinningLine(testCase.getPos()), "Failed testCase:\n" + testCase);
+            assertFalse("Failed testCase:\n" + testCase, gameBoard.hasWinningLine(testCase.getPos()));
         }
     }
 }
