@@ -1,29 +1,34 @@
 package com.github.chptr_one.tictactoe;
 
+import com.github.chptr_one.tictactoe.common.GameBoard;
+import com.github.chptr_one.tictactoe.common.Mark;
 import com.github.chptr_one.tictactoe.common.Position;
-import org.junit.BeforeClass;
+import com.github.chptr_one.tictactoe.player.HumanPlayer;
+import com.github.chptr_one.tictactoe.ui.ConsoleUI;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
+import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
 public class ConsoleUITest {
 
-    @BeforeClass
-    public static void init() {
+    @Before
+    public void init() {
         Position.initialize(3);
     }
 
     @Rule
     public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
 
-/*
     @Rule
-    final TextFromStandardInputStream systemInMock = emptyStandardInputStream();
+    public final TextFromStandardInputStream systemInMock = emptyStandardInputStream();
 
     @Test
-    void printBlankGameBoard() {
+    public void printBlankGameBoard() {
         String blankBoard3x3String = """
                   1 2 3
                 1 . . .
@@ -34,21 +39,12 @@ public class ConsoleUITest {
         ConsoleUI.print(gameBoard);
         assertEquals(blankBoard3x3String, systemOutRule.getLogWithNormalizedLineSeparator());
     }
-*/
 
     @Test
-    public void test1() {
-        String s = "HelloWorld";
-        System.out.println(s);
-        assertEquals("HelloWorld\n", systemOutRule.getLogWithNormalizedLineSeparator());
-    }
-/*
-    @Test
     public void readPosition() {
-        systemInMock.provideLines("1 1" + ls);
+        systemInMock.provideLines("1 1");
         Position expected = Position.of(1, 1);
         Position actual = ConsoleUI.readPosition(new HumanPlayer("Test human", Mark.X));
         assertEquals(expected, actual);
     }
-*/
 }

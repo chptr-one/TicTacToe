@@ -12,8 +12,8 @@ import java.util.stream.IntStream;
 
 public class ConsoleUI {
 
-    private static final Scanner scanner = new Scanner(System.in);
     private static String columnNumbers;
+    private static Scanner scanner;
 
     private ConsoleUI() {
     }
@@ -41,13 +41,23 @@ public class ConsoleUI {
     }
 
     public static Position readPosition(Player player) {
-        int row;
-        int col;
+        if (scanner == null) {
+            scanner = new Scanner(System.in);
+        }
+        int row = -1;
+        int col = -1;
         do {
             System.out.print(player.getName() + ". Enter row and col: ");
-            row = scanner.nextInt() - 1;
-            col = scanner.nextInt() - 1;
+            String input = scanner.nextLine();
+            try {
+                String[] parts = input.split("\s+");
+                row = Integer.parseInt(parts[0]);
+                col = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException ignored) {
+                System.out.println("Wrong number format");
+            }
         } while (!Position.isValid(row, col));
+
         return Position.of(row, col);
     }
 }
