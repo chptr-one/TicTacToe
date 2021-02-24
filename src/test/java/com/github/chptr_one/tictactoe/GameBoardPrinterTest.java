@@ -13,8 +13,8 @@ import java.io.PrintStream;
 class GameBoardPrinterTest {
 
     private final PrintStream originalOut = System.out;
-    private final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    private final PrintStream redirectedOut = new PrintStream(baos);
+    private final ByteArrayOutputStream content = new ByteArrayOutputStream();
+    private final PrintStream redirectedOut = new PrintStream(content);
 
     @BeforeEach
     public void setup() {
@@ -24,7 +24,7 @@ class GameBoardPrinterTest {
     @AfterEach
     public void tearDown() {
         System.setOut(originalOut);
-        baos.reset();
+        content.reset();
     }
 
     @Test
@@ -33,6 +33,6 @@ class GameBoardPrinterTest {
         String blankBoard3x3String = "  1 2 3" + ls + "1 . . ." + ls + "2 . . ." + ls + "3 . . ." + ls;
         var gameBoard = new GameBoard(3);
         GameBoardPrinter.print(gameBoard);
-        Assertions.assertEquals(blankBoard3x3String, baos.toString());
+        Assertions.assertEquals(blankBoard3x3String, content.toString());
     }
 }
