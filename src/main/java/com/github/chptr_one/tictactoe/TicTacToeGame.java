@@ -42,7 +42,7 @@ public class TicTacToeGame {
             Position position;
             do {
                 position = currentPlayer.getMove(gameBoard);
-            } while (!isValidMove(position));
+            } while (!gameBoard.isEmptyCell(position));
 
             gameBoard.setMark(position, currentPlayer.getMark());
             GameBoardPrinter.print(gameBoard);
@@ -59,9 +59,5 @@ public class TicTacToeGame {
         } while (gameState == GameState.RUNNING);
 
         System.out.println(gameState + " current player: " + currentPlayer.getName());
-    }
-
-    private boolean isValidMove(Position position) {
-        return gameBoard.isEmptyCell(position);
     }
 }
