@@ -2,16 +2,16 @@ package com.github.chptr_one.tictactoe;
 
 import com.github.chptr_one.tictactoe.common.Position;
 import com.github.chptr_one.tictactoe.player.AiPlayer;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.List;
 
 import static com.github.chptr_one.tictactoe.common.Mark.O;
 import static com.github.chptr_one.tictactoe.common.Mark.X;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class AiPlayerTest {
+public class AiPlayerTest {
 
     private final List<TestCase> xWins = List.of(
             new TestCase("xx." + ".o." + "o..", Position.of(0, 2), 5),
@@ -19,13 +19,13 @@ class AiPlayerTest {
             new TestCase(".xo" + "o.." + ".x.", Position.of(1, 1), 5)
     );
 
-    @BeforeAll
-    static void init() {
+    @BeforeClass
+    public static void init() {
         Position.initialize(3);
     }
 
     @Test
-    void aiPlayerWinsByCompletedAlmostWinningLine() {
+    public void aiPlayerWinsByCompletedAlmostWinningLine() {
         var aiPlayer = new AiPlayer("Test AI", X);
         for (var testCase : xWins) {
             var gameBoard = testCase.getGameBoard();
@@ -41,12 +41,12 @@ class AiPlayerTest {
     );
 
     @Test
-    void aiPlayerBlocksOpponentsWinningLine() {
+    public void aiPlayerBlocksOpponentsWinningLine() {
         var aiPlayer = new AiPlayer("Test AI", O);
         for (var testCase : oDefeats) {
             var gameBoard = testCase.getGameBoard();
             var move = aiPlayer.getMove(gameBoard);
-            assertEquals(testCase.getPos(), move, testCase.toString());
+            assertEquals(testCase.getPos(), move);
         }
     }
 
@@ -56,12 +56,12 @@ class AiPlayerTest {
     );
 
     @Test
-    void aiPlayerMakesFork() {
+    public void aiPlayerMakesFork() {
         var aiPlayer = new AiPlayer("Test AI", O);
         for (var testCase : forkByO) {
             var gameBoard = testCase.getGameBoard();
             var move = aiPlayer.getMove(gameBoard);
-            assertEquals(testCase.getPos(), move, testCase.toString());
+            assertEquals(testCase.getPos(), move);
         }
     }
 }

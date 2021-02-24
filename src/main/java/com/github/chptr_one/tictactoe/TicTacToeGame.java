@@ -7,7 +7,7 @@ import com.github.chptr_one.tictactoe.common.Position;
 import com.github.chptr_one.tictactoe.player.AiPlayer;
 import com.github.chptr_one.tictactoe.player.HumanPlayer;
 import com.github.chptr_one.tictactoe.player.Player;
-import com.github.chptr_one.tictactoe.ui.GameBoardPrinter;
+import com.github.chptr_one.tictactoe.ui.ConsoleUI;
 
 public class TicTacToeGame {
 
@@ -35,7 +35,7 @@ public class TicTacToeGame {
     }
 
     public void run() {
-        GameBoardPrinter.print(gameBoard);
+        ConsoleUI.print(gameBoard);
 
         Player currentPlayer = firstPlayer;
         do {
@@ -45,7 +45,9 @@ public class TicTacToeGame {
             } while (!gameBoard.isEmptyCell(position));
 
             gameBoard.setMark(position, currentPlayer.getMark());
-            GameBoardPrinter.print(gameBoard);
+            ConsoleUI.printMessage(currentPlayer.getName() + " made a move to "
+                    + (position.getRow() + 1) + ", " + (position.getCol() + 1));
+            ConsoleUI.print(gameBoard);
 
             if (gameBoard.isGameOver(position)) {
                 if (!gameBoard.hasEmptyCells()) {
@@ -58,6 +60,6 @@ public class TicTacToeGame {
             }
         } while (gameState == GameState.RUNNING);
 
-        System.out.println(gameState + " current player: " + currentPlayer.getName());
+        ConsoleUI.printMessage(gameState + " current player: " + currentPlayer.getName());
     }
 }
