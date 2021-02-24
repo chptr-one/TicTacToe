@@ -4,9 +4,8 @@ import com.github.chptr_one.tictactoe.common.GameBoard;
 import com.github.chptr_one.tictactoe.common.Mark;
 import com.github.chptr_one.tictactoe.common.Position;
 
-import java.util.function.IntBinaryOperator;
-
-import static com.github.chptr_one.tictactoe.common.Mark.*;
+import static com.github.chptr_one.tictactoe.common.Mark.O;
+import static com.github.chptr_one.tictactoe.common.Mark.X;
 
 public class AiPlayer extends AbstractPlayer {
 
@@ -23,7 +22,7 @@ public class AiPlayer extends AbstractPlayer {
         int bestWeight = Integer.MIN_VALUE;
         for (var move : gameBoard.getEmptyCells()) {
             gameBoard.setMark(move, mark);
-            int weight = minimax(gameBoard, move, false);
+            int weight = minimax(gameBoard, move, false, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
             gameBoard.unsetMark(move);
             if (weight > bestWeight) {
                 bestWeight = weight;
@@ -35,28 +34,50 @@ public class AiPlayer extends AbstractPlayer {
 
     private int calculateWeight(GameBoard gameBoard, Position move) {
         if (gameBoard.hasWinningLine(move)) {
-            return 100;
+            return Integer.MAX_VALUE - 1;
         } else {
             return 0;
         }
     }
 
-    private int minimax(GameBoard gameBoard, Position move, boolean isMax) {
+    private int minimax(GameBoard gameBoard,
+                        Position move,
+                        boolean isMax,
+                        int depth,
+                        int alpha,
+                        int beta) {
+
         if (gameBoard.isGameOver(move)) {
             int weight = calculateWeight(gameBoard, move);
-            weight = isMax ? -weight : weight;
+            weight = isMax ? -weight + depth : weight - depth;
             return weight;
         }
 
-        int bestWeight = isMax ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-        Mark currentMark = isMax ? mark : opponentMark;
-        IntBinaryOperator maximizer = isMax ? Math::max : Math::min;
-
-        for (var pos : gameBoard.getEmptyCells()) {
-            gameBoard.setMark(pos, currentMark);
-            int weight = minimax(gameBoard, pos, !isMax);
-            gameBoard.unsetMark(pos);
-            bestWeight = maximizer.applyAsInt(weight, bestWeight);
+        int bestWeight;
+        if (isMax) {
+            bestWeight = Integer.MIN_VALUE;
+            for (var pos : gameBoard.getEmptyCells()) {
+                gameBoard.setMark(pos, mark);
+                int weight = minimax(gameBoard, pos, false, depth++, alpha, beta);
+                gameBoard.unsetMark(pos);
+                bestWeight = Math.max(weight, bestWeight);
+                alpha = Math.max(alpha, bestWeight);
+                if (alpha >= beta) {
+                    break;
+                }
+            }
+        } else {
+            bestWeight = Integer.MAX_VALUE;
+            for (var pos : gameBoard.getEmptyCells()) {
+                gameBoard.setMark(pos, opponentMark);
+                int weight = minimax(gameBoard, pos, true, depth++, alpha, beta);
+                gameBoard.unsetMark(pos);
+                bestWeight = Math.min(weight, bestWeight);
+                beta = Math.min(beta, bestWeight);
+                if (beta <= alpha) {
+                    break;
+                }
+            }
         }
 
         return bestWeight;
