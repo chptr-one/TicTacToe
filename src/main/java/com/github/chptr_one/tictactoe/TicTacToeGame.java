@@ -45,6 +45,8 @@ public class TicTacToeGame {
             } while (!gameBoard.isEmptyCell(position));
 
             gameBoard.setMark(position, currentPlayer.getMark());
+            ConsoleUI.printMessage(currentPlayer.getName() + " made a move to "
+                    + (position.getRow() + 1) + ", " + (position.getCol() + 1));
             ConsoleUI.print(gameBoard);
 
             if (gameBoard.isGameOver(position)) {
@@ -58,6 +60,6 @@ public class TicTacToeGame {
             }
         } while (gameState == GameState.RUNNING);
 
-        System.out.println(gameState + " current player: " + currentPlayer.getName());
+        ConsoleUI.printMessage(gameState + " current player: " + currentPlayer.getName());
     }
 }

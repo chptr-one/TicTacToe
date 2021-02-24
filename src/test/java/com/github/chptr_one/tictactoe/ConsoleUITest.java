@@ -43,7 +43,7 @@ public class ConsoleUITest {
     @Test
     public void readPosition() {
         systemInMock.provideLines("1 1");
-        Position expected = Position.of(1, 1);
+        Position expected = Position.of(0, 0);
         Position actual = ConsoleUI.readPosition(new HumanPlayer("Test human", Mark.X));
         assertEquals(expected, actual);
     }

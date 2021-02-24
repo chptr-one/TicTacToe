@@ -51,13 +51,17 @@ public class ConsoleUI {
             String input = scanner.nextLine();
             try {
                 String[] parts = input.split("\s+");
-                row = Integer.parseInt(parts[0]);
-                col = Integer.parseInt(parts[1]);
+                row = Integer.parseInt(parts[0]) - 1;
+                col = Integer.parseInt(parts[1]) - 1;
             } catch (NumberFormatException ignored) {
                 System.out.println("Wrong number format");
             }
         } while (!Position.isValid(row, col));
 
         return Position.of(row, col);
+    }
+
+    public static void printMessage(String message) {
+        System.out.println(message);
     }
 }
