@@ -6,8 +6,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class PositionTest {
 
@@ -69,5 +68,40 @@ public class PositionTest {
         //noinspection ResultOfMethodCallIgnored
         assertThrows(IllegalStateException.class,
                 () -> Position.isValid(-1, 0));
+    }
+
+    @Test
+    public void isValidReturnsTrueOnValidInput() {
+        assertTrue(Position.isValid(0, 0));
+        assertTrue(Position.isValid(1, 1));
+        assertTrue(Position.isValid(2, 2));
+    }
+
+    @Test
+    public void isValidReturnsFalseOnInvalidInput() {
+        assertFalse(Position.isValid(-1, 0));
+        assertFalse(Position.isValid(0, -1));
+        assertFalse(Position.isValid(0, 4));
+        assertFalse(Position.isValid(4, 0));
+    }
+
+    @Test
+    public void equalityCheck() {
+        Position p1 = Position.of(0, 0);
+        Position p2 = Position.of(0, 0);
+        assertEquals(p1, p2);
+
+        Position p3 = Position.of(1, 1);
+        assertNotEquals(p1, p3);
+    }
+
+    @Test
+    public void hashCodeCheck() {
+        Position p1 = Position.of(0, 0);
+        Position p2 = Position.of(0, 0);
+
+        assertEquals(p1.hashCode(), p2.hashCode());
+        Position p3 = Position.of(1, 1);
+        assertNotEquals(p1.hashCode(), p3.hashCode());
     }
 }

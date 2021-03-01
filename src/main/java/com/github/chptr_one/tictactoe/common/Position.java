@@ -1,6 +1,13 @@
 package com.github.chptr_one.tictactoe.common;
 
+import java.util.stream.IntStream;
+
 public class Position {
+
+    private static int size;
+    private static Position[] pool;
+    private static boolean initialized = false;
+
     private final int row;
     private final int col;
 
@@ -9,42 +16,30 @@ public class Position {
         this.col = col;
     }
 
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
-    private static int size;
-    private static Position[] pool;
-    private static boolean initialized = false;
-
     public static void initialize(int size) {
         Position.size = size;
-        pool = new Position[Position.size * Position.size];
-        for (int i = 0; i < pool.length; i++) {
-            pool[i] = new Position(i / Position.size, i % Position.size);
-        }
+        Position.pool = IntStream.range(0, size * size)
+                .mapToObj(i -> new Position(i / Position.size, i % Position.size))
+                .toArray(Position[]::new);
         initialized = true;
     }
 
-    public static boolean isValid(int row, int col) {
+    private static void checkInitialize() {
         if (!initialized) {
-            throw new IllegalStateException("You must initialize Position class before first usage.");
+            throw new IllegalStateException("You must call Position.initialize() before first usage.");
         }
+    }
+
+    public static boolean isValid(int row, int col) {
+        checkInitialize();
         return row >= 0 && row < size && col >= 0 && col < size;
     }
 
     public static Position of(int row, int col) {
-        if (!initialized) {
-            throw new IllegalStateException("You must initialize Position class before first usage.");
-        }
+        checkInitialize();
         if (!isValid(row, col)) {
             throw new IllegalArgumentException("Arguments must be in range [0.." + size + ").");
         }
-
         return pool[row * size + col];
     }
 
@@ -52,22 +47,12 @@ public class Position {
         return size;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Position position = (Position) o;
-
-        if (row != position.row) return false;
-        return col == position.col;
+    public int getRow() {
+        return row;
     }
 
-    @Override
-    public int hashCode() {
-        int result = row;
-        result = 31 * result + col;
-        return result;
+    public int getCol() {
+        return col;
     }
 
     @Override
