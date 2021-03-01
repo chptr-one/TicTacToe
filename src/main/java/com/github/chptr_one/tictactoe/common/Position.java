@@ -4,10 +4,6 @@ import java.util.stream.IntStream;
 
 public class Position {
 
-    private static int size;
-    private static Position[] pool;
-    private static boolean initialized = false;
-
     private final int row;
     private final int col;
 
@@ -15,6 +11,10 @@ public class Position {
         this.row = row;
         this.col = col;
     }
+
+    private static int size;
+    private static Position[] pool;
+    private static boolean initialized = false;
 
     public static void initialize(int size) {
         Position.size = size;
