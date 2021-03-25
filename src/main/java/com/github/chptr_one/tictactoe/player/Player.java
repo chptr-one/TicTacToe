@@ -1,15 +1,13 @@
 package com.github.chptr_one.tictactoe.player;
 
-import com.github.chptr_one.tictactoe.common.GameBoard;
-import com.github.chptr_one.tictactoe.common.Mark;
-import com.github.chptr_one.tictactoe.common.Position;
+import com.github.chptr_one.tictactoe.GameBoard;
+import com.github.chptr_one.tictactoe.Move;
+import com.github.chptr_one.tictactoe.Tile;
 
 public interface Player {
-
-    Position getMove(GameBoard gameBoard);
+    Move makeMove(GameBoard board);
 
     String getName();
 
-    Mark getMark();
-
+    Tile getTile();
 }

@@ -1,67 +1,76 @@
 package com.github.chptr_one.tictactoe.ui;
 
-import com.github.chptr_one.tictactoe.common.GameBoard;
-import com.github.chptr_one.tictactoe.common.Mark;
-import com.github.chptr_one.tictactoe.common.Position;
-import com.github.chptr_one.tictactoe.player.Player;
+import com.github.chptr_one.tictactoe.Coordinates;
+import com.github.chptr_one.tictactoe.GameBoard;
+import com.github.chptr_one.tictactoe.Tile;
 
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ConsoleUI {
+public class ConsoleUI implements UI {
 
-    private static String columnNumbers;
-    private static Scanner scanner;
+    public static final String X_STRING = "x";
+    public static final String O_STRING = "o";
+    public static final String BLANK_STRING = ".";
 
-    private ConsoleUI() {
+    private final Scanner scanner = new Scanner(System.in);
+    private String header;
+
+    private static String tileToString(Tile tile) {
+        String result;
+        switch (tile) {
+            case X -> result = X_STRING;
+            case O -> result = O_STRING;
+            default -> result = BLANK_STRING;
+        }
+        return result;
     }
 
-    private static String markToString(Mark mark) {
-        if (mark == null) return ".";
-        return mark == Mark.X ? "x" : "o";
-    }
-
-    public static void print(GameBoard gameBoard) {
-        if (columnNumbers == null) {
-            columnNumbers = "  " + IntStream.range(1, gameBoard.getSize() + 1)
-                    .mapToObj(String::valueOf)
+    @Override
+    public void drawBoard(GameBoard board) {
+        Tile[][] tiles = board.getTiles();
+        int size = tiles.length;
+        if (header == null) {
+            header = "  " + IntStream.rangeClosed(1, size)
+                    .mapToObj(Integer::toString)
                     .collect(Collectors.joining(" "));
         }
 
-        System.out.println(columnNumbers);
-        int rowNumber = 1;
-        for (var row : gameBoard.getBoard()) {
-            String result = rowNumber++ + " " + Arrays.stream(row)
-                    .map(ConsoleUI::markToString)
-                    .collect(Collectors.joining(" "));
-            System.out.println(result);
+        System.out.println(header);
+        for (int row = 0; row < size; row++) {
+            String line = (row + 1) + " " +
+                    Arrays.stream(tiles[row])
+                            .map(ConsoleUI::tileToString)
+                            .collect(Collectors.joining(" "));
+            System.out.println(line);
         }
     }
 
-    public static Position readPosition(Player player) {
-        if (scanner == null) {
-            scanner = new Scanner(System.in);
+    @Override
+    public Coordinates readCoordinates() {
+        System.out.print("Enter row and col: ");
+        while (!scanner.hasNextInt()) {
+            scanner.next();
+            System.out.println("Enter two numbers separated by spaces.");
         }
-        int row = -1;
-        int col = -1;
-        do {
-            System.out.print(player.getName() + ". Enter row and col: ");
-            String input = scanner.nextLine();
-            try {
-                String[] parts = input.split("\s+");
-                row = Integer.parseInt(parts[0]) - 1;
-                col = Integer.parseInt(parts[1]) - 1;
-            } catch (NumberFormatException ignored) {
-                System.out.println("Wrong number format");
-            }
-        } while (!Position.isValid(row, col));
-
-        return Position.of(row, col);
+        int row = scanner.nextInt();
+        while (!scanner.hasNextInt()) {
+            scanner.next();
+            System.out.println("Enter col number.");
+        }
+        int col = scanner.nextInt();
+        return Coordinates.of(row - 1, col - 1);
     }
 
-    public static void printMessage(String message) {
+    @Override
+    public void showInputPrompt(String name) {
+        showMessage("Player " + name + " moves.");
+    }
+
+    @Override
+    public void showMessage(String message) {
         System.out.println(message);
     }
 }
