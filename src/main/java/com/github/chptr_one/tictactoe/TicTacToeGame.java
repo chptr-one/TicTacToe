@@ -1,5 +1,6 @@
 package com.github.chptr_one.tictactoe;
 
+import com.github.chptr_one.tictactoe.player.AIPlayer;
 import com.github.chptr_one.tictactoe.player.HumanPlayer;
 import com.github.chptr_one.tictactoe.player.Player;
 import com.github.chptr_one.tictactoe.ui.ConsoleUI;
@@ -24,7 +25,7 @@ public class TicTacToeGame {
         this.board = new GameBoard(3);
         this.ui = new ConsoleUI();
         this.player1 = new HumanPlayer("X Player", Tile.X, ui);
-        this.player2 = new HumanPlayer("O Player", Tile.O, ui);
+        this.player2 = new AIPlayer("O Player", Tile.O);
         this.currentPlayer = player1;
         this.gameState = GameState.RUNNING;
     }

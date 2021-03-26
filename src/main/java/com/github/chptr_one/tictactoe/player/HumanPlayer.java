@@ -6,25 +6,12 @@ import com.github.chptr_one.tictactoe.Move;
 import com.github.chptr_one.tictactoe.Tile;
 import com.github.chptr_one.tictactoe.ui.UI;
 
-public class HumanPlayer implements Player {
-    private final String name;
-    private final Tile tile;
+public class HumanPlayer extends AbstractPlayer {
     private final UI ui;
 
     public HumanPlayer(String name, Tile tile, UI ui) {
-        this.name = name;
-        this.tile = tile;
+        super(name, tile);
         this.ui = ui;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public Tile getTile() {
-        return tile;
     }
 
     @Override

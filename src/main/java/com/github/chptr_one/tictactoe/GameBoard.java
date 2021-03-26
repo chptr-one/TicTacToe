@@ -1,6 +1,8 @@
 package com.github.chptr_one.tictactoe;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class GameBoard {
@@ -70,6 +72,18 @@ public class GameBoard {
 
     public boolean hasPossibleMoves() {
         return emptyTilesCount > 0;
+    }
+
+    public List<Coordinates> getBlankTilesCoordinates() {
+        List<Coordinates> coordinates = new ArrayList<>();
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                if (tiles[row][col] == Tile.BLANK) {
+                    coordinates.add(Coordinates.of(row, col));
+                }
+            }
+        }
+        return coordinates;
     }
 
     public Tile[][] getTiles() {
