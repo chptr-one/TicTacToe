@@ -18,20 +18,17 @@ public class AIPlayer extends AbstractPlayer {
 
     @Override
     public Move makeMove(GameBoard board) {
-        Move bestMove = null;
-        int bestValue = Integer.MIN_VALUE;
-        for (var coord : board.getBlankTilesCoordinates()) {
-            Move move = new Move(coord, tile);
-            int value = minimax(board.accept(move), false);
-            if (value > bestValue) {
-                bestMove = move;
-                bestValue = value;
-            }
-        }
-        return bestMove;
+        return board.getBlankTilesCoordinates().stream()
+                .map(coord -> new Move(coord, tile))
+                .max((m1, m2) -> {
+                    int v1 = minimax(board.accept(m1), Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                    int v2 = minimax(board.accept(m2), Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                    return Integer.compare(v1, v2);
+                })
+                .orElse(null);
     }
 
-    private int minimax(GameBoard board, boolean isMax) {
+    private int minimax(GameBoard board, int alpha, int beta, boolean isMax) {
         if (board.hasCompletedLine(X) || board.hasCompletedLine(O) || !board.hasPossibleMoves()) {
             return evaluateBoard(board);
         }
@@ -42,16 +39,24 @@ public class AIPlayer extends AbstractPlayer {
             for (var coord : board.getBlankTilesCoordinates()) {
                 var move = new Move(coord, tile);
                 var newBoard = board.accept(move);
-                int value = minimax(newBoard, false);
+                int value = minimax(newBoard, alpha, beta, false);
                 bestValue = Math.max(value, bestValue);
+                alpha = Math.max(alpha, bestValue);
+                if (alpha >= beta) {
+                    break;
+                }
             }
         } else {
             bestValue = Integer.MAX_VALUE;
             for (var coord : board.getBlankTilesCoordinates()) {
                 var move = new Move(coord, opponentTile);
                 var newBoard = board.accept(move);
-                int value = minimax(newBoard, true);
+                int value = minimax(newBoard, alpha, beta, true);
                 bestValue = Math.min(value, bestValue);
+                beta = Math.min(beta, bestValue);
+                if (beta <= alpha) {
+                    break;
+                }
             }
         }
         return bestValue;
